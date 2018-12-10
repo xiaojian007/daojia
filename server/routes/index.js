@@ -38,6 +38,4 @@ router.post('/addbook', controllers.addbook)
 router.get('/booklist', controllers.booklist)
 router.get('/bookdetail', controllers.bookdetail)
 router.get('/top', controllers.top)
-router.get('/commentlist', controllers.commentlist)
-router.post('/addcomment', controllers.addcomment)
 module.exports = router

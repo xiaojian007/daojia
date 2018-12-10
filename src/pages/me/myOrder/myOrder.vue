@@ -21,7 +21,7 @@
 export default {
   data () {
     return {
-      indicatorDots: true,
+      indicatorDots: false,
       autoplay: false,
       interval: 3000,
       duration: 500,
