@@ -1,4 +1,9 @@
 {
   "navigationBarTitleText": "评论",
-  "enablePullDownRefresh": true 
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "i-button": "../../../static/iVew/button/index",
+    "i-radio-group": "../../../static/iVew/radio-group/index",
+    "i-radio": "../../../static/iVew/radio/index"
+  }
 }

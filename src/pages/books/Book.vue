@@ -11,7 +11,6 @@
   
   import card from '@/components/card'
   import TopSwiper from '@/components/Topswiper'
-  // import { constants } from 'http2'
   export default {
     data () {
       return {
