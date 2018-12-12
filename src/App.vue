@@ -1,4 +1,5 @@
 <script>
+
 // import {showSuccess} from './util'
 // import qcloud from 'wafer2-client-sdk'
 // import config from './config'
@@ -36,6 +37,7 @@ export default {
 </script>
 
 <style>
+@import '../static/iconfont/iconfont.css';
 .container {
   height: 100%;
   display: flex;

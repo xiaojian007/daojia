@@ -1,0 +1,7 @@
+.i-cell-group{
+    display: flex;
+    display: -webkit-flex;
+    width: 100%;
+    flex-wrap: wrap;
+    color: #292d33;
+}

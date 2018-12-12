@@ -1,58 +1,70 @@
 <template>
   <div class="joinUs">
     <img mode="widthFix" class="join-img" src="../../../static/img/join.jpg" alt="">
-    <view class="page-section">
-      <view class="weui-cells__title">姓名</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_input">
-          <input class="weui-input" auto-focus placeholder="请输入您的姓名"/>
+    <form>
+      <view class="page-section">
+        <view class="weui-cells__title">姓名</view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+            <input class="weui-input" auto-focus placeholder="请输入您的姓名" v-model="submitData.name" />
+          </view>
+        </view>
+        <view class="weui-cells__title">电话</view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+            <input class="weui-input" auto-focus placeholder="请输入您的联系方式" v-model="submitData.tel" />
+          </view>
+        </view>
+        <view class="weui-cells__title">主体</view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+            <i-radio-group class="type" :current="submitData.subject" @change="handleSubjectChange">
+                <i-radio v-for="(item, index) in subjectList" :key="index" :value="item.name">
+                </i-radio>
+            </i-radio-group>
+          </view>
+        </view>
+        <view class="weui-cells__title">主营行业</view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+            <i-checkbox-group :current="submitData.industry" @change="handleIndustryChange">
+                <i-checkbox v-for="(item, index) in industryList" :key="index" v-model="item.name">
+                </i-checkbox>
+            </i-checkbox-group>
+          </view>
+        </view>
+        <view class="weui-cells__title">城市</view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+            <input class="weui-input" auto-focus placeholder="请输入您能服务的城市" v-model="submitData.city" />
+          </view>
+        </view>
+        <view class="weui-cells__title">微信号</view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+            <input class="weui-input" auto-focus placeholder="请输入您的微信号" v-model="submitData.chat"/>
+          </view>
         </view>
       </view>
-      <view class="weui-cells__title">电话</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_input">
-          <input class="weui-input" auto-focus placeholder="请输入您的联系方式"/>
-        </view>
-      </view>
-      <view class="weui-cells__title">类型</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_input">
-          <i-radio-group class="type" :current="current" @change="handleFruitChange">
-              <i-radio v-for="(item, index) in fruit" :position="position" :key="index" :value="item.name">
-              </i-radio>
-          </i-radio-group>
-        </view>
-      </view>
-      <view class="weui-cells__title">主营行业</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_input">
-          <input class="weui-input" auto-focus placeholder="请输入您的联系方式"/>
-        </view>
-      </view>
-      <view class="weui-cells__title">城市</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_input">
-          <input class="weui-input" auto-focus placeholder="请输入您能服务的城市"/>
-        </view>
-      </view>
-      <view class="weui-cells__title">微信号</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_input">
-          <input class="weui-input" auto-focus placeholder="请输入您的微信号"/>
-        </view>
-      </view>
-    </view>
-    <button>加盟接单</button>
+    </form>
+      <button @click="formSubmit">立即加盟</button>
   </div>
 </template>
 
 <script>
+  import { post, showModal } from '@/util'
   export default {
     data () {
       return {
-        current: '个人',
-        position: 'left',
-        fruit: [{
+        submitData: {
+          name: '',
+          subject: '个人',
+          industry: [],
+          tel: '',
+          city: '',
+          chat: ''
+        },
+        subjectList: [{
           id: 1,
           name: '企业'
         }, {
@@ -61,15 +73,61 @@
         }, {
           id: 3,
           name: '个人'
+        }],
+        industryList: [{
+          id: 1,
+          name: '搬家运输'
+        }, {
+          id: 2,
+          name: '管道疏通'
+        }, {
+          id: 3,
+          name: '保洁清洗'
+        }, {
+          id: 4,
+          name: '家电维修'
+        }, {
+          id: 5,
+          name: '保姆月嫂'
+        }, {
+          id: 6,
+          name: '其他服务'
         }]
       }
     },
     components: {
     },
     methods: {
-      handleFruitChange (e) {
-        console.log(e)
-        this.current = e.mp.detail.value
+      handleSubjectChange (e) {
+        // console.log(e)
+        this.submitData.subject = e.mp.detail.value
+      },
+      handleIndustryChange (e) {
+        // console.log(e.mp.detail.value)
+        if (this.submitData.industry.indexOf(e.mp.detail.value) === -1) {
+          this.submitData.industry.push(e.mp.detail.value)
+        }
+      },
+      async formSubmit () {
+        console.log(this.submitData)
+        const data = {
+          name: this.submitData.name,
+          subject: this.submitData.subject,
+          industry: this.submitData.industry,
+          tel: this.submitData.tel,
+          city: this.submitData.city,
+          chat: this.submitData.chat
+        }
+        try {
+          await post('/weapp/join', data)
+          this.comment = ''
+          this.getComments()
+        } catch (e) {
+          showModal('失败', e.msg)
+        }
+      },
+      formReset () {
+        console.log('form发生了reset事件')
       }
     }
   }
@@ -103,7 +161,7 @@
 .weui-cells {
   margin-top:1.17647059em;
   background-color:#FFFFFF;
-  line-height:1.5;
+  padding: 10rpx 0;
   font-size:24rpx;
 }
 .weui-cells_after-title {

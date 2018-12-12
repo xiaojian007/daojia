@@ -2,8 +2,9 @@
   "navigationBarTitleText": "评论",
   "enablePullDownRefresh": true,
   "usingComponents": {
-    "i-button": "../../../static/iVew/button/index",
     "i-radio-group": "../../../static/iVew/radio-group/index",
-    "i-radio": "../../../static/iVew/radio/index"
+    "i-radio": "../../../static/iVew/radio/index",
+    "i-checkbox-group": "../../../static/iVew/checkbox-group/index",
+    "i-checkbox": "../../../static/iVew/checkbox/index"
   }
 }
