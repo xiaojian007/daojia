@@ -8,13 +8,14 @@
     "pages/me/joinWork/main",
     "pages/me/myAddr/main",
     "pages/books/main",
+    "pages/books/appointment/main",
     "pages/comments/main",
     "pages/detail/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#e6544c",
-    "navigationBarTitleText": "蜗牛图书",
+    "navigationBarTitleText": "家政分类",
     "navigationBarTextStyle": "light"
   },
   "tabBar": {

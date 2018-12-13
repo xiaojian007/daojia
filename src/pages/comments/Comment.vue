@@ -56,6 +56,31 @@
   export default {
     data () {
       return {
+        // guiguan:[{
+        //   id: 0,
+        //   title: '水管',
+        //   dataList: [{
+        //     id: '',
+        //     icon: 'fff',
+        //     contant: '2324'
+        //   },{
+        //     id: '',
+        //     icon: 'fff',
+        //     contant: '2324'
+        //   }]
+        // },{
+        //   id: 1,
+        //   title: '统统',
+        //   dataList: [{
+        //     id: '',
+        //     icon: 'fff',
+        //     contant: '2324'
+        //   },{
+        //     id: '',
+        //     icon: 'fff',
+        //     contant: '2324'
+        //   }]
+        // }],
         submitData: {
           name: '',
           subject: '个人',
