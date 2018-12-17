@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/me/main",
+    "pages/me/myOrder/main",
+    "pages/me/cardCoupon/main",
+    "pages/me/helpCenter/main",
+    "pages/me/imsetting/main",
+    "pages/me/joinWork/main",
+    "pages/me/myAddr/main",
+    "pages/books/main",
+    "pages/books/appointment/main",
+    "pages/comments/main",
+    "pages/detail/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#e6544c",
+    "navigationBarTitleText": "家政分类",
+    "navigationBarTextStyle": "light"
+  },
+  "tabBar": {
+    "selectedColor": "#e6544c",
+    "list": [{
+      "pagePath": "pages/books/main",
+      "text": "快速下单",
+      "selectedIconPath": "static/img/book-active.png",
+      "iconPath": "static/img/book.png"
+    }, {
+      "pagePath": "pages/comments/main",
+      "text": "加盟抢单",
+      "selectedIconPath": "static/img/todo-active.png",
+      "iconPath": "static/img/todo.png"
+    }, {
+      "pagePath": "pages/me/main",
+      "text": "我的订单",
+      "selectedIconPath": "static/img/me-active.png",
+      "iconPath": "static/img/me.png"
+    }]
+  }
+}
