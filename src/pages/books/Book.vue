@@ -133,10 +133,13 @@
       }
     },
     methods: {
+<<<<<<< HEAD
       async getRepair () {
         const Repair = await get('/weapp/repair')
         console.log(Repair)
       },
+=======
+>>>>>>> 0b61f42d3affe6a4f587415a22f67e132e000d70
       async getList (init) {
         if (init) {
           this.page = 0
@@ -187,7 +190,10 @@
     onReachBottom () {
     },
     mounted () {
+<<<<<<< HEAD
       this.getRepair()
+=======
+>>>>>>> 0b61f42d3affe6a4f587415a22f67e132e000d70
     }
   }
 </script>
