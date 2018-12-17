@@ -134,11 +134,10 @@
         }
       },
       async formSubmit () {
-        console.log(this.submitData)
         const data = {
           name: this.submitData.name,
           subject: this.submitData.subject,
-          industry: this.submitData.industry,
+          industry: toString(this.submitData.industry),
           tel: this.submitData.tel,
           city: this.submitData.city,
           chat: this.submitData.chat

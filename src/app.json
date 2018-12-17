@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/books/main",
     "pages/me/main",
     "pages/me/myOrder/main",
     "pages/me/cardCoupon/main",
@@ -7,9 +8,9 @@
     "pages/me/imsetting/main",
     "pages/me/joinWork/main",
     "pages/me/myAddr/main",
-    "pages/books/main",
-    "pages/books/appointment/main",
     "pages/comments/main",
+    "pages/addserver/main",
+    "pages/addserver/appointment/main",
     "pages/detail/main"
   ],
   "window": {
@@ -23,6 +24,11 @@
     "list": [{
       "pagePath": "pages/books/main",
       "text": "快速下单",
+      "selectedIconPath": "static/img/book-active.png",
+      "iconPath": "static/img/book.png"
+    }, {
+      "pagePath": "pages/addserver/main",
+      "text": "增值服务",
       "selectedIconPath": "static/img/book-active.png",
       "iconPath": "static/img/book.png"
     }, {

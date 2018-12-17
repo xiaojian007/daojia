@@ -76,4 +76,8 @@ export default {
   color: #aaa;
   margin: 10rpx auto;
 }
+image{
+  width: 100%;
+  height: auto;
+}
 </style>

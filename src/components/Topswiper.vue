@@ -2,22 +2,20 @@
   <div class="swiper">
     <swiper 
       indicator-dots='true'
-      indicator-color='#ea5a49'
-      indicator-active-color="#000"
+      indicator-color='#fff'
+      indicator-active-color="#049efe"
       autoplay='true'
       interval="6000"
       duration="1000"
       circular="true"
     >
-      <div v-for="(top, index) in imgUrls" :key="index">
+      <div v-for="(top, index) in tops" :key="index">
         <swiper-item>
           <img 
-            @click="bookDetail(img)"
-            :src="img.image" 
+            @click="bookDetail(top.id, top.url)"
+            :src="top.img" 
             alt="" 
-            v-for="(img,indexs) in top"
-            :key="indexs"
-            mode="aspectFit" 
+            mode="widthFix"
             class="slide-image"
           >
         </swiper-item>
@@ -30,24 +28,19 @@
   export default {
     data () {
       return {
-        tops: []
       }
     },
     methods: {
       bookDetail (item) {
-        wx.navigateTo({
-          url: '/pages/detail/main?id=' + item.id
-        })
+        // wx.navigateTo({
+        //   url: '/pages/detail/main?id=' + item.id
+        // })
       }
     },
     computed: {
-      imgUrls () {
-        let res = this.tops
-        return [res.slice(0, 3), res.slice(3, 6), res.slice(6, 9)]
-      }
     },
     mounted () {
-      // console.log(this.imgUrls)
+      // console.log(tops)
     },
     props: [
       'tops'
@@ -56,12 +49,5 @@
 </script> 
 
 <style lang="scss">
-.swiper{
-  margin-top: 10rpx;
-  .slide-image{
-    width: 33%;
-    height: 250rpx;
-  }
-}
 </style>
 

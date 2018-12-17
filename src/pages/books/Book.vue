@@ -1,145 +1,138 @@
 <template>
-  <div class="repair">
-    <div class="sdDredge" v-for="(item, index) in repairState" :key="index">
-      <h2 class="repairTit">
-        <strong></strong>
-        <span>{{ item.name }}</span>
-      </h2>
-      <div class="sdDredgeUl">
-        <ul>
-          <li v-for="(item2,i) in item.context" :key="i" @click="toUrl(item.name, item2.contant)">
-            <i class="iconfont iconColor1" :class="[item2.iconfont, item2.color]"></i>
-            <p>{{ item2.contant }}</p>
-          </li>
-        </ul>
-        <div class="repairLine"></div>
+  <div class="baojie">
+    <!-- 保洁次数 -->
+    <div class="baojie-top">
+      <img class="top-img" src="../../../static/img/bjbg.jpg" mode="widthFix" alt="">
+      <div class="baojie-free">您的免费保洁服务还剩余
+        <span>10</span> 次</div>
+    </div>
+    <margin :value="20"></margin>
+    <!-- 保洁1 -->
+    <div class="baojieList1">
+      <ul>
+        <li v-for="(item, index) in baojie" :key="index" @click="yuyue()">
+          <i class="iconfont iconColor1" :class="[item.iconfont, item.color]"></i>
+          <p>{{ item.contant }}</p>
+        </li>
+      </ul>
+    </div>
+    <margin :value="20"></margin>
+    <!-- 保洁2 -->
+    <div class="baojieList1">
+      <ul>
+        <li v-for="(item, index) in baojie2" :key="index" @click="yuyue()">
+          <i class="iconfont iconColor1" :class="[item.iconfont, item.color]"></i>
+          <p>{{ item.contant }}</p>
+        </li>
+      </ul>
+    </div>
+    <margin :value="20"></margin>
+    <!-- 轮播图 -->
+    <div class="baojieSwpier">
+      <TopSwiper :tops="tops"></TopSwiper>
+    </div>
+    <margin :value="20"></margin>
+    <!-- 组合套餐 -->
+    <div class="baojieBox">
+      <div class="baojieContent">
+        <h2 class="conH2">超划算组合套餐</h2>
+        <div class="baojieList">
+          <div class="baojieItem" v-for="(item, index) in 5" :key="index">
+            <div class="baojieListLeft">
+              <img class="itemImg" src="../../../static/img/img.png" mode="widthFix" alt="">
+            </div>
+            <div class="baojieListRight">
+              <p class="baojieP">家居经典套餐</p>
+              <span class="baojieSpan">4小时全屋保洁+4小时精细擦窗</span>
+              <div class="baojieA">
+                <a class="baojieAs" href="javascript:void(0)">了解详情</a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import margin from '@/components/margin'
+  import TopSwiper from '@/components/Topswiper'
   import { get } from '@/util'
-  
   export default {
     data () {
       return {
         books: [],
         page: 0,
         more: false,
-        tops: [],
-        repairState: [{
+        tops: [{
+          id: 0,
+          url: '',
+          img: '../../../static/img/banner.png'
+        }, {
+          id: 1,
+          url: '',
+          img: '../../../static/img/banner.png'
+        }, {
+          id: 2,
+          url: '',
+          img: '../../../static/img/banner.png'
+        }],
+        baojie: [{
           id: '0',
-          name: '水电疏通',
-          context: [{
-            id: '0',
-            iconfont: 'icon-guandaoshutong',
-            contant: '管道疏通',
-            color: 'iconColor1'
-          },
-          {
-            id: '1',
-            iconfont: 'icon-shuiguanlongtou',
-            contant: '水管龙头',
-            color: 'iconColor2'
-          },
-          {
-            id: '2',
-            iconfont: 'icon-dengjudianlu',
-            contant: '灯具电路',
-            color: 'iconColor3'
-          },
-          {
-            id: '3',
-            iconfont: 'icon-fangshuizhilou',
-            contant: '防水治漏',
-            color: 'iconColor4'
-          },
-          {
-            id: '4',
-            iconfont: 'icon-weishengjianshenduqingjie',
-            contant: '厨卫洁具',
-            color: 'iconColor5'
-          }]
-        },
-        {
+          iconfont: 'icon-zuofanxiwan',
+          contant: '做饭',
+          color: 'iconColor4'
+        }, {
           id: '1',
-          name: '开锁换锁',
-          context: [{
-            id: '0',
-            iconfont: 'icon-kaisuo',
-            contant: '开锁',
-            color: 'iconColor1'
-          },
-          {
-            id: '1',
-            iconfont: 'icon-genghuansuoxin',
-            contant: '更换锁芯',
-            color: 'iconColor2'
-          },
-          {
-            id: '2',
-            iconfont: 'icon-genghuanzhengtisuo',
-            contant: '更换整套锁',
-            color: 'iconColor3'
-          },
-          {
-            id: '3',
-            iconfont: 'icon-genghuanmenbashou',
-            contant: '更换门把手',
-            color: 'iconColor4'
-          },
-          {
-            id: '4',
-            iconfont: 'icon-genghuansuoti',
-            contant: '更换锁体',
-            color: 'iconColor5'
-          },
-          {
-            id: '5',
-            iconfont: 'icon-genghuanzhiwensuo',
-            contant: '更换指纹锁',
-            color: 'iconColor6'
-          },
-          {
-            id: '6',
-            iconfont: 'icon-baoxianxiangkaisuo',
-            contant: '保险箱开锁',
-            color: 'iconColor7'
-          },
-          {
-            id: '7',
-            iconfont: 'icon-qichekaisuo',
-            contant: '汽车开锁',
-            color: 'iconColor8`'
-          }]
-        },
-        {
+          iconfont: 'icon-zuofanxiwan',
+          contant: '洗碗',
+          color: 'iconColor4'
+        }, {
           id: '2',
-          name: '家电维修',
-          context: [{
-            id: '0',
-            iconfont: 'icon-kongtiaojiafu',
-            contant: '空调加氟',
-            color: 'iconColor1'
-          },
-          {
-            id: '1',
-            iconfont: 'icon-kongtiaoyiji',
-            contant: '空调移机安装',
-            color: 'iconColor2'
-          }]
+          iconfont: 'icon-zuofanxiwan',
+          contant: '日常保洁',
+          color: 'iconColor4'
+        }],
+        baojie2: [{
+          id: '0',
+          iconfont: 'icon-zuofanxiwan',
+          contant: '日常保洁',
+          color: 'iconColor2'
+        }, {
+          id: '1',
+          iconfont: 'icon-zuofanxiwan',
+          contant: '深度保洁',
+          color: 'iconColor1'
+        }, {
+          id: '2',
+          iconfont: 'icon-zuofanxiwan',
+          contant: '开荒保洁',
+          color: 'iconColor5'
+        }, {
+          id: '3',
+          iconfont: 'icon-zuofanxiwan',
+          contant: '保姆月嫂',
+          color: 'iconColor2'
+        }, {
+          id: '4',
+          iconfont: 'icon-zuofanxiwan',
+          contant: '收纳',
+          color: 'iconColor1'
         }]
       }
     },
+    components: {
+      margin,
+      TopSwiper
+    },
     methods: {
-<<<<<<< HEAD
       async getRepair () {
         const Repair = await get('/weapp/repair')
-        console.log(Repair)
+        // this.repairState = Repair.list
+        console.log(Repair.list)
+        console.log(this.repairState)
       },
-=======
->>>>>>> 0b61f42d3affe6a4f587415a22f67e132e000d70
       async getList (init) {
         if (init) {
           this.page = 0
@@ -167,20 +160,20 @@
         const tops = await get('/weapp/top')
         this.tops = tops.list
       },
-      toUrl (name, contant) {
+      yuyue (name, contant) {
         console.log(name, contant)
-        wx.navigateTo({
-          url: '../../pages/books/appointment/main?name=' + name + '&contant' + contant,
-          success () {
-            console.log('成功后的跳转')
-          },
-          fail () {
-            console.log('失败后的跳转')
-          },
-          complete () {
-            console.log('结束后的回调(成功，失败都会执行)')
-          }
-        })
+        // wx.navigateTo({
+        //   url: '../../pages/me/myOrder/main?id=4',
+        //   success () {
+        //     console.log('成功后的跳转')
+        //   },
+        //   fail () {
+        //     console.log('失败后的跳转')
+        //   },
+        //   complete () {
+        //     console.log('结束后的回调(成功，失败都会执行)')
+        //   }
+        // })
       }
     },
     // 头部向下拉加载
@@ -190,117 +183,125 @@
     onReachBottom () {
     },
     mounted () {
-<<<<<<< HEAD
       this.getRepair()
-=======
->>>>>>> 0b61f42d3affe6a4f587415a22f67e132e000d70
     }
   }
 </script>
 
 <style lang="scss">
-.repairTit {
-  text-align: left;
-  color: #333;
-  font-weight: normal;
-  padding: 2% 0 2% 0;
-  font-size: 40rpx;
-  border-bottom: 2rpx solid #dedede;
-
-  strong {
-    width: 10rpx;
-    background: #3c7bf9;
-    height: 36rpx;
-    vertical-align: middle;
-    margin-right: 2%;
-    display: inline-block;
-  }
-
-  span {
-    vertical-align: middle;
-  }
-}
-
-.sdDredgeUl {
-  ul {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    li {
-      border-bottom: 2rpx solid #dedede;
-      border-right: 2rpx solid #dedede;
-      box-sizing: border-box;
-      flex: 0 0 33.3333333%;
-      padding: 5% 0;
-      text-align: center;
-      font-size: 32rpx;
-      &:nth-child(3n) {
-        border-right: 0;
-      }
-      a {
-        color: #333;
-      }
-    }
-  }
-
-  .repairLine {
-    height: 12rpx;
-    background: #ebebeb;
-    margin-top: -2rpx;
+.baojie {
+  &-top {
+    width: 100%;
     position: relative;
-    z-index: 999;
-  }
-}
+    text-align: center;
+    .top-img {
+      width: 100%;
+    }
+    .baojie-free {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      bottom: 2%;
+      color: #fff;
+      font: 200 24rpx/1 '';
 
-.repairSuccessTop {
-  padding: 10% 0;
-  text-align: center;
-  color: #1b85e9;
-  font-size: 40rpx;
-  border-bottom: 12rpx solid #ebebeb;
-
-  i {
-    display: block;
-    font-size: 85px;
-  }
-}
-
-.repairSuccessContent {
-  padding: 2% 4%;
-
-  p {
-    padding: 2% 0;
-    color: #555;
-    font-size: 32rpx;
-    display: flex;
-
-    span {
-      width: 30%;
+      span {
+        display: inline-block;
+        color: #F49C23;
+        font-weight: 400;
+        background: #fff;
+        border-radius: 50%;
+        width: 48rpx;
+        height: 48rpx;
+        line-height: 48rpx;
+      }
     }
   }
 }
 
-.repairSuccessbtn {
+.baojieSwpier{
+  .swiper{
+    height: 210rpx;
+    ._swiper{
+      height: 210rpx;
+      .slide-image{
+        width: 100%;
+      }
+    }
+  }
+}
+
+.baojieList1 ul {
   display: flex;
-  margin-top: 15%;
-  text-align: center;
-  align-content: space-around;
+  flex-wrap: wrap;
+  align-content: flex-start;
 
-  .Successbtn {
-    color: #fff;
-    font-size: 20px;
-    border: none;
-    padding: 1.5% 0;
-    border-radius: 14rpx;
-    margin: 0 2%;
-    background: #ff5622;
-    display: block;
-    flex: 1;
+  li {
+    box-sizing: border-box;
+    flex: 0 0 33.3333333%;
+    padding: 1% 0;
+    text-align: center;
+    font-size: 16px;
 
-    &.Successbtn1 {
-      background: #fff;
-      border: 1px solid #ff5622;
-      color: #ff5622;
+    a {
+      color: #333;
+    }
+  }
+}
+
+.baojieBox {
+  padding: 0 2%;
+  background: #ebebeb;
+  .baojieContent {
+    background: #fff;
+    border-radius: 20rpx;
+    .conH2 {
+      color: #111111;
+      font-size: 44rpx;
+      font-weight: normal;
+      text-align: center;
+      padding-top: 3%;
+    }
+
+    .baojieItem {
+      display: flex;
+      justify-content: flex-start;
+      padding: 3%;
+      border-bottom: 2rpx solid #dedede;
+      .baojieListLeft {
+        width: 30%;
+        .itemImg{
+          border-radius: 5%;
+        }
+      }
+
+      .baojieListRight {
+        width: 65%;
+        margin-left: 5%;
+        position: relative;
+        color: #333;
+        font-size: 32rpx;
+
+        .baojieSpan {
+          color: #9a9a9a;
+          font-size: 28rpx;
+        }
+
+        .baojieA{
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          padding: 1% 5%;
+          background: #ff5622;
+          border-radius: 30rpx;
+
+          .baojieAs {
+            color: #fff;
+            font-size: 28rpx;
+            display: block;
+          }
+        }
+      }
     }
   }
 }

@@ -41,8 +41,5 @@ router.get('/top', controllers.top)
 router.get('/commentlist', controllers.commentlist)
 router.post('/addcomment', controllers.addcomment)
 router.post('/join', controllers.join)
-<<<<<<< HEAD
 router.get('/repair', controllers.repair)
-=======
->>>>>>> 0b61f42d3affe6a4f587415a22f67e132e000d70
 module.exports = router
