@@ -4,26 +4,37 @@ module.exports = async (ctx) => {
     const repairList = await mysql('repairlist')
     const repair = await mysql('repair')
     ctx.state.data = {
-        list: repair.map(v => {
-            var context = ''
-            for (var i = 0; i < repairList.length; i++) {
-                if (v.type === repairList[i].type) {
-                    context += toJsonString(repairList[i]) + '&'
-                }
-            }
-            // context = context.substring(0, context.lastIndexOf('&'))
-            context += ''
-            console.log(typeof (context))
-            v.context = context.split('&')
-            return v
-        })
+        list: list(repair, repairList)
     }
 }
 
-function toJsonString (obj) {
-    var msg = []
-    for (var key in obj) {
-        msg.push([key, ':', obj[key]].join(' '))
+function list (arr1, arr2) {
+    var repairArray = new Array()
+    for (var i = 0; i < arr1.length; i++) {
+        var aa = {
+            id: arr1[i].id,
+            name: arr1[i].name
+        }
+        var repairListArray = new Array()
+        for (var j = 0; j < arr2.length; j++) {
+            var repairListObj = {
+                id: arr2[j].id,
+                contant: arr2[j].contant,
+                color: arr2[j].color,
+                iconfont: arr2[j].iconfont
+            }
+            repairListArray.push(repairListObj)
+        }
+        aa.context = repairListArray
+        repairArray.push(aa)
     }
-    return '{' + msg.join(', ') + '}'
+    return repairArray
 }
+
+// function toJsonString (obj) {
+//     var msg = []
+//     for (var key in obj) {
+//         msg.push([key, ':', obj[key]].join(' '))
+//     }
+//     return '{' + msg.join(', ') + '}'
+// }
