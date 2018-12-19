@@ -10,7 +10,7 @@
     <!-- 保洁1 -->
     <div class="baojieList1">
       <ul>
-        <li v-for="(item, index) in baojie" :key="index" @click="yuyue()">
+        <li v-for="(item, index) in baojie" :key="index" @click="yuyue(item.id, item.contant)">
           <i class="iconfont iconColor1" :class="[item.iconfont, item.color]"></i>
           <p>{{ item.contant }}</p>
         </li>
@@ -37,15 +37,15 @@
       <div class="baojieContent">
         <h2 class="conH2">超划算组合套餐</h2>
         <div class="baojieList">
-          <div class="baojieItem" v-for="(item, index) in 5" :key="index">
-            <div class="baojieListLeft">
-              <img class="itemImg" src="../../../static/img/img.png" mode="widthFix" alt="">
+          <div class="baojieItem" v-for="(item, index) in taocanlist" :key="index">
+            <div class="baojieListLeft" @click.stop="preview(item.img)">
+              <img class="itemImg" :src="item.img" mode="widthFix" alt="">
             </div>
             <div class="baojieListRight">
-              <p class="baojieP">家居经典套餐</p>
-              <span class="baojieSpan">4小时全屋保洁+4小时精细擦窗</span>
+              <p class="baojieP">{{item.title}}</p>
+              <span class="baojieSpan">{{item.content}}</span>
               <div class="baojieA">
-                <a class="baojieAs" href="javascript:void(0)">了解详情</a>
+                <div class="baojieAs">了解详情</div>
               </div>
             </div>
           </div>
@@ -68,57 +68,78 @@
         tops: [{
           id: 0,
           url: '',
-          img: '../../../static/img/banner.png'
+          img: 'http://www.bitauto.com/topics/ad_topic/xtlcx/miniImg/banner.png'
         }, {
           id: 1,
           url: '',
-          img: '../../../static/img/banner.png'
+          img: 'http://www.bitauto.com/topics/ad_topic/xtlcx/miniImg/banner.png'
         }, {
           id: 2,
           url: '',
-          img: '../../../static/img/banner.png'
+          img: 'http://www.bitauto.com/topics/ad_topic/xtlcx/miniImg/banner.png'
         }],
         baojie: [{
           id: '0',
           iconfont: 'icon-zuofanxiwan',
           contant: '做饭',
-          color: 'iconColor4'
+          color: 'iconColor2'
         }, {
           id: '1',
           iconfont: 'icon-zuofanxiwan',
           contant: '洗碗',
-          color: 'iconColor4'
+          color: 'iconColor1'
         }, {
           id: '2',
-          iconfont: 'icon-zuofanxiwan',
-          contant: '日常保洁',
-          color: 'iconColor4'
+          iconfont: 'icon-richangweisheng',
+          contant: '保洁',
+          color: 'iconColor5'
         }],
         baojie2: [{
           id: '0',
-          iconfont: 'icon-zuofanxiwan',
+          iconfont: 'icon-richangweisheng',
           contant: '日常保洁',
-          color: 'iconColor2'
+          color: 'iconColor4'
         }, {
           id: '1',
-          iconfont: 'icon-zuofanxiwan',
+          iconfont: 'icon-jujiakaihuangbaojie',
           contant: '深度保洁',
-          color: 'iconColor1'
+          color: 'iconColor4'
         }, {
           id: '2',
-          iconfont: 'icon-zuofanxiwan',
+          iconfont: 'icon-boliqingjie',
           contant: '开荒保洁',
-          color: 'iconColor5'
+          color: 'iconColor4'
         }, {
           id: '3',
-          iconfont: 'icon-zuofanxiwan',
+          iconfont: 'icon-baomu',
           contant: '保姆月嫂',
-          color: 'iconColor2'
+          color: 'iconColor4'
         }, {
           id: '4',
-          iconfont: 'icon-zuofanxiwan',
+          iconfont: 'icon-shouna',
           contant: '收纳',
-          color: 'iconColor1'
+          color: 'iconColor4'
+        }, {
+          id: '5',
+          iconfont: 'icon-fangshuizhilou',
+          contant: '外墙清洁',
+          color: 'iconColor4'
+        }],
+        taocanlist: [{
+          id: '0',
+          title: '家居经典套餐',
+          img: 'http://www.bitauto.com/topics/ad_topic/xtlcx/miniImg/img.png',
+          content: '4小时全屋保洁+4小时精细擦窗'
+        }, {
+          id: '1',
+          title: '厨房保洁清蒸',
+          img: 'http://www.bitauto.com/topics/ad_topic/xtlcx/miniImg/img.png',
+          content: '4小时全屋保洁+4小时厨房蒸洗'
+        }, {
+          id: '2',
+          title: '全面大扫除套餐',
+          img: 'http://www.bitauto.com/topics/ad_topic/xtlcx/miniImg/img.png',
+          content: '4小时保洁+4小时擦窗+4小时厨房蒸洗'
         }]
       }
     },
@@ -160,20 +181,35 @@
         const tops = await get('/weapp/top')
         this.tops = tops.list
       },
-      yuyue (name, contant) {
-        console.log(name, contant)
-        // wx.navigateTo({
-        //   url: '../../pages/me/myOrder/main?id=4',
-        //   success () {
-        //     console.log('成功后的跳转')
-        //   },
-        //   fail () {
-        //     console.log('失败后的跳转')
-        //   },
-        //   complete () {
-        //     console.log('结束后的回调(成功，失败都会执行)')
-        //   }
-        // })
+      yuyue (id, contant) {
+        wx.navigateTo({
+          url: '../../pages/addserver/appointment/main?id=' + id,
+          success () {
+            console.log('成功后的跳转')
+          },
+          fail () {
+            console.log('失败后的跳转')
+          },
+          complete () {
+            console.log('结束后的回调(成功，失败都会执行)')
+          }
+        })
+      },
+      preview (img) {
+        wx.previewImage({
+          current: img, // 当前显示图片的链接，不填则默认为 urls 的第一张
+          urls: [img, img, img], // 可以接口提供多个图片达到轮播的效果
+          success (res) {
+            // success
+            console.log(img)
+          },
+          fail () {
+            // fail
+          },
+          complete () {
+            // complete
+          }
+        })
       }
     },
     // 头部向下拉加载
@@ -251,16 +287,16 @@
 
 .baojieBox {
   padding: 0 2%;
-  background: #ebebeb;
+  background: #f1f2f6;
   .baojieContent {
     background: #fff;
     border-radius: 20rpx;
     .conH2 {
-      color: #111111;
-      font-size: 44rpx;
-      font-weight: normal;
+      color: #1B85E9;
+      font-size: 40rpx;
+      font-weight: bold;
       text-align: center;
-      padding-top: 3%;
+      padding: 20rpx 0;
     }
 
     .baojieItem {

@@ -9,13 +9,13 @@ module.exports = async (ctx) => {
 }
 
 function list (arr1, arr2) {
-    var repairArray = new Array()
+    var repairArray = []
     for (var i = 0; i < arr1.length; i++) {
-        var aa = {
+        var repairObj = {
             id: arr1[i].id,
             name: arr1[i].name
         }
-        var repairListArray = new Array()
+        var repairListArray = []
         for (var j = 0; j < arr2.length; j++) {
             var repairListObj = {
                 id: arr2[j].id,
@@ -25,8 +25,8 @@ function list (arr1, arr2) {
             }
             repairListArray.push(repairListObj)
         }
-        aa.context = repairListArray
-        repairArray.push(aa)
+        repairObj.context = repairListArray
+        repairArray.push(repairObj)
     }
     return repairArray
 }
@@ -38,3 +38,4 @@ function list (arr1, arr2) {
 //     }
 //     return '{' + msg.join(', ') + '}'
 // }
+
