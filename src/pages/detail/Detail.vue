@@ -171,7 +171,6 @@
     mounted () {
       this.bookid = this.$root.$mp.query.id
       this.getDetail()
-      console.log(1)
       this.getComments()
       let userinfo = wx.getStorageSync('userinfo')
       if (userinfo) {

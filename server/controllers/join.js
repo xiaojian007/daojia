@@ -6,7 +6,7 @@ module.exports = async (ctx) => {
     try {
         await mysql('join').insert({ name, subject, industry, tel, city, chat })
         ctx.state.data = {
-            msg: 'success'
+            msg: '欢迎您的加入'
         }
     } catch (e) {
         ctx.state = {

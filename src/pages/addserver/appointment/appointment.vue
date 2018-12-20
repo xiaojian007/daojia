@@ -5,21 +5,37 @@
 
       <div class="xuanze">
         <span class="title">选择类目</span>
-        <div class="type" @click="showSinglePicker(0)">{{pickerText}}<span class="typeSpan"></span></div>
+        <div class="type" @click="showSinglePicker(0)">{{dronType}}<span class="typeSpan"></span></div>
       </div>
 
-      <div class="xuanze ">
+      <div class="xuanze">
         <span class="title">选择项目</span>
-        <div class="type" @click="showSinglePicker(1)">{{pickerText1}}<span class="typeSpan"></span></div>
+        <div class="type" @click="showSinglePicker(1)">{{dronProject}}<span class="typeSpan"></span></div>
       </div>
 
-      <div class="xuanze ">
+      <div class="xuanze">
         <span class="title">预约时间</span>
-        <div class="type" @click="showMulLinkageThreePicker">{{pickerText2}}<span class="typeSpan"></span></div>
+        <div class="type" @click="showMulLinkageThreePicker">{{dronTime}}<span class="typeSpan"></span></div>
       </div>
 
+      <div class="xuanze">
+        <span class="title">地址</span>
+        <input class="type" @input="addressChange" type="text" placeholder="请输入地址..." v-model="address">
+        <i class="address">*地址可在我的信息中更改</i>
+        <div class="vague" v-if="addressArrayShow">
+          <scroll-view 
+            scroll-y
+            v-if="addressArrayShow"
+            style="max-height: 200rpx;"
+            bindscrolltoupper="upper"
+            bindscrolltolower="lower"
+            bindscroll="scroll">
+            <div class="vagueItem" @click="vagueMap(item.address)" v-for="(item, index) of addressArrayList" :key="index">{{item.address}}</div>
+          </scroll-view>
+        </div>
+      </div>
       <div class="xuanze xuanze4">
-        <textarea class="textarea" cols="5" placeholder="我要留言......" v-model="textarea">
+        <textarea class="textarea" cols="3" placeholder="我要留言......" v-model="textarea">
         </textarea>
       </div>
 
@@ -33,7 +49,6 @@
 
 <script>
 import mpvuePicker from '@/components/mpvuePicker.vue'
-// import mpvuePicker from 'mpvue-picker';
 export default {
   components: {
     mpvuePicker
@@ -44,12 +59,13 @@ export default {
       deepLength: 0,
       pickerValueDefault: [], // 初始化值
       pickerValueArray: [], // picker 数组值
-      pickerText: '请选择',
-      pickerText1: '请选择',
-      pickerText2: '请选择',
+      dronType: '保洁',
+      dronProject: '请选择',
+      dronTime: '请选择',
+      address: '宇宙国地球村中国1号',
       themeColor: '', // 颜色主题
       textarea: '',
-      pickerSingleArray: [
+      dronTypeArray: [
         {
           label: '做饭',
           value: 1
@@ -63,7 +79,7 @@ export default {
           value: 3
         }
       ],
-      pickerSingleArray2: [
+      dronProjectArray: [
         {
           label: '日常保洁',
           value: 1
@@ -89,7 +105,7 @@ export default {
           value: 6
         }
       ],
-      mulLinkageThreePicker: [
+      dronTimeArray: [
         {
           label: '今天',
           value: 0,
@@ -556,7 +572,32 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      addressArray: [
+        {
+          id: 0,
+          address: '上海'
+        }, {
+          id: 1,
+          address: '北京'
+        }, {
+          id: 1,
+          address: '北京'
+        }, {
+          id: 1,
+          address: '北京'
+        }, {
+          id: 1,
+          address: '北京'
+        }, {
+          id: 1,
+          address: '北京'
+        }, {
+          id: 1,
+          address: '北京'
+        }
+      ],
+      addressArrayList: []
     }
   },
   methods: {
@@ -566,12 +607,28 @@ export default {
     onCancel (e) {
       console.log(e)
     },
+    // 地址模糊查询
+    addressChange () {
+      var NewAddress = []
+      this.addressArray.map(item => {
+        if (item.address.search(this.address) !== -1 && this.address) {
+          NewAddress.push(item)
+        }
+      })
+      this.addressArrayList = NewAddress
+    },
+    // 下拉地址点击
+    vagueMap (value) {
+      // console.log(1)
+      this.address = value
+      this.addressArrayList = []
+    },
     // 下拉
     showSinglePicker (item) {
       if (item === 0) {
-        this.pickerValueArray = this.pickerSingleArray
+        this.pickerValueArray = this.dronTypeArray
       } else if (item === 1) {
-        this.pickerValueArray = this.pickerSingleArray2
+        this.pickerValueArray = this.dronProjectArray
       }
       this.mode = 'selector'
       this.pickerValueDefault = []
@@ -581,26 +638,42 @@ export default {
     },
     // 时间三级联动选择
     showMulLinkageThreePicker () {
-      this.pickerValueArray = this.mulLinkageThreePicker
+      this.pickerValueArray = this.dronTimeArray
       this.mode = 'multiLinkageSelector'
       this.deepLength = 3
       this.pickerValueDefault = [1, 1, 1]
       this.themeColor = '#8D0177'
       this.$refs.mpvuePicker.show()
     },
+    // 返回
     onConfirm (e) {
       console.log(e.label)
-      console.log(this.deepLength)
       if (this.mode === 'selector') {
         if (this.deepLength === 0) {
-          this.pickerText = e.label
+          this.dronType = e.label
         } else if (this.deepLength === 1) {
-          this.pickerText1 = e.label
+          this.dronProject = e.label
         }
       } else if (this.mode === 'multiLinkageSelector' && this.deepLength === 3) {
-        this.pickerText2 = e.label
+        let array = e.label.split('-')
+        let time = array[0] + '   ' + array[1] + ':' + array[2]
+        this.dronTime = time
       }
     }
+  },
+  computed: {
+    addressArrayShow () {
+      // console.log(this.addressArray.length > 0)
+      // return (this.addressArray.length > 0) ? true : false
+      if (this.addressArrayList.length > 0) {
+        return true
+      } else {
+        return false
+      }
+    }
+  },
+  mounted () {
+    this.dronProject = this.$root.$mp.query.contant
   }
 }
 </script>
@@ -623,7 +696,8 @@ export default {
       border-top: 1rpx solid #E8E8E8;
       padding-right: 15rpx;
       box-sizing: border-box;
-
+      position: relative;
+      z-index: 5;
       .title {
         color: #000;
         font-size: 32rpx;
@@ -650,44 +724,34 @@ export default {
           transition: transform 0.3s ease-out;
         }
       }
-
-      .el-select {
-        flex: auto;
-      }
-
-      button {
-        display: inline-block;
-        background: #FF5723;
-        color: #fff;
-        height: 30px;
-        width: 80px;
-        border: none;
-        padding: 2px;
-        // margin-right: 12px;
-        border-radius: 5px;
-        outline: none;
-      }
-
-      .yy-datatime {
-        flex: auto;
-        padding: 0 15px;
-        box-sizing: border-box;
-
-        button {
-          width: 100%;
-          background: none;
-          border: none;
-          color: #333;
-          box-shadow: none;
-          text-align: left;
-          outline: none;
+      .vague{
+        position: absolute;
+        top: 100rpx;
+        z-index: 2;
+        left: 200rpx;
+        width: 100%;
+        background: #fff;
+        .vagueItem{
+          font-size: 32rpx;
+          line-height: 60rpx;
+          color: #000;
         }
       }
+      .address{
+        font-style: normal;
+        color: #ea9128;
+        font-size: 26rpx;
+        line-height: 32rpx;
+        width: 170rpx;
+        -webkit-transform: scale(0.8);
+        transform: scale(0.8);
+      }
     }
-
     .xuanze4 {
+      z-index: 1;
       border-bottom: 1px solid #E8E8E8;
       .textarea{
+        position: relative;
         display: block;
         resize: vertical;
         padding: 10rpx 30rpx;
@@ -696,6 +760,7 @@ export default {
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
         width: 100%;
+        height: 200rpx;
         color: #606266;
         background-color: #fff;
         background-image: none;

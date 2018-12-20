@@ -47,7 +47,7 @@
         </view>
       </view>
     </form>
-      <button @click="formSubmit">立即加盟</button>
+    <button class="btn" @click="formSubmit">立即加盟</button>
   </div>
 </template>
 
@@ -56,32 +56,15 @@
   export default {
     data () {
       return {
-        // guiguan:[{
-        //   id: 0,
-        //   title: '水管',
-        //   dataList: [{
-        //     id: '',
-        //     icon: 'fff',
-        //     contant: '2324'
-        //   },{
-        //     id: '',
-        //     icon: 'fff',
-        //     contant: '2324'
-        //   }]
-        // },{
-        //   id: 1,
-        //   title: '统统',
-        //   dataList: [{
-        //     id: '',
-        //     icon: 'fff',
-        //     contant: '2324'
-        //   },{
-        //     id: '',
-        //     icon: 'fff',
-        //     contant: '2324'
-        //   }]
-        // }],
         submitData: {
+          name: '',
+          subject: '个人',
+          industry: [],
+          tel: '',
+          city: '',
+          chat: ''
+        },
+        submitData2: {
           name: '',
           subject: '个人',
           industry: [],
@@ -137,17 +120,18 @@
         const data = {
           name: this.submitData.name,
           subject: this.submitData.subject,
-          industry: toString(this.submitData.industry),
+          industry: this.submitData.industry.join(','),
           tel: this.submitData.tel,
           city: this.submitData.city,
           chat: this.submitData.chat
         }
         try {
-          await post('/weapp/join', data)
-          this.comment = ''
-          this.getComments()
+          const back = await post('/weapp/join', data)
+          console.log(back.msg)
+          showModal('提交成功', back.msg)
+          this.submitData = this.submitData2
         } catch (e) {
-          showModal('失败', e.msg)
+          showModal('提交失败', e.msg)
         }
       },
       formReset () {
@@ -173,6 +157,9 @@
       display: flex;
       width: 100%;
     }
+  }
+  .btn{
+    margin-top: 20rpx;
   }
 }
 .weui-cells__title {

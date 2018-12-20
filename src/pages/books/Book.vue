@@ -20,7 +20,7 @@
     <!-- 保洁2 -->
     <div class="baojieList1">
       <ul>
-        <li v-for="(item, index) in baojie2" :key="index" @click="yuyue()">
+        <li v-for="(item, index) in baojie2" :key="index" @click="yuyue(item.id, item.contant)">
           <i class="iconfont iconColor1" :class="[item.iconfont, item.color]"></i>
           <p>{{ item.contant }}</p>
         </li>
@@ -183,7 +183,7 @@
       },
       yuyue (id, contant) {
         wx.navigateTo({
-          url: '../../pages/addserver/appointment/main?id=' + id,
+          url: '../../pages/addserver/appointment/main?id=' + id + '&contant=' + contant,
           success () {
             console.log('成功后的跳转')
           },
