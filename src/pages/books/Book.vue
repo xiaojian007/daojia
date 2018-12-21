@@ -140,6 +140,16 @@
           title: '全面大扫除套餐',
           img: 'http://www.bitauto.com/topics/ad_topic/xtlcx/miniImg/img.png',
           content: '4小时保洁+4小时擦窗+4小时厨房蒸洗'
+        }, {
+          id: '2',
+          title: '全面大扫除套餐',
+          img: 'http://www.bitauto.com/topics/ad_topic/xtlcx/miniImg/img.png',
+          content: '4小时保洁+4小时擦窗+4小时厨房蒸洗'
+        }, {
+          id: '2',
+          title: '全面大扫除套餐',
+          img: 'http://www.bitauto.com/topics/ad_topic/xtlcx/miniImg/img.png',
+          content: '4小时保洁+4小时擦窗+4小时厨房蒸洗'
         }]
       }
     },
@@ -150,9 +160,7 @@
     methods: {
       async getRepair () {
         const Repair = await get('/weapp/repair')
-        // this.repairState = Repair.list
         console.log(Repair.list)
-        console.log(this.repairState)
       },
       async getList (init) {
         if (init) {
@@ -214,12 +222,14 @@
     },
     // 头部向下拉加载
     async onPullDownRefresh () {
+      console.log(1)
     },
     // 底部向上拉加载
     onReachBottom () {
     },
     mounted () {
       this.getRepair()
+      console.log(wx.getStorageSync('userinfo'))
     }
   }
 </script>

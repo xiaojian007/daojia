@@ -4,6 +4,17 @@
     <div class="yuyue-list">
 
       <div class="xuanze">
+        <span class="title">您的称呼</span>
+        <input class="type" type="text" placeholder="请输入您的姓名" v-model="name">
+      </div>
+
+      <div class="xuanze">
+        <span class="title">联系方式</span>
+        <input class="type" type="text" placeholder="请输入您的手机号码" v-model="phone">
+        <button v-if="getIphone" class="getIphone" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">号码授权</button>
+      </div>
+
+      <div class="xuanze">
         <span class="title">选择类目</span>
         <div class="type" @click="showSinglePicker(0)">{{dronType}}<span class="typeSpan"></span></div>
       </div>
@@ -20,7 +31,7 @@
 
       <div class="xuanze">
         <span class="title">地址</span>
-        <input class="type" @input="addressChange" type="text" placeholder="请输入地址..." v-model="address">
+        <input class="type" @input="addressChange" type="text" placeholder="请输入地址" v-model="address">
         <i class="address">*地址可在我的信息中更改</i>
         <div class="vague" v-if="addressArrayShow">
           <scroll-view 
@@ -34,6 +45,7 @@
           </scroll-view>
         </div>
       </div>
+      
       <div class="xuanze xuanze4">
         <textarea class="textarea" cols="3" placeholder="我要留言......" v-model="textarea">
         </textarea>
@@ -43,11 +55,12 @@
       <mpvue-picker ref="mpvuePicker" :mode="mode" :deepLength="deepLength" :pickerValueDefault="pickerValueDefault" :themeColor="themeColor" @onChange="onChange" @onConfirm="onConfirm" @onCancel="onCancel" :pickerValueArray="pickerValueArray"></mpvue-picker>
     </div>
     <p class="yy-notice">*预约成功后客服三十分钟内给您安排并向您回电确认.</p>
-    <button class="yy-btn">开始预约</button>
+    <button class="yy-btn" @click="appointment">开始预约</button>
   </div>
 </template>
 
 <script>
+import {showSuccess, newDate, post, showModal} from '@/util'
 import mpvuePicker from '@/components/mpvuePicker.vue'
 export default {
   components: {
@@ -57,11 +70,15 @@ export default {
     return {
       mode: 'selector',
       deepLength: 0,
+      name: '',
+      getIphone: true,
+      userinfo: {},
       pickerValueDefault: [], // 初始化值
       pickerValueArray: [], // picker 数组值
       dronType: '保洁',
       dronProject: '请选择',
       dronTime: '请选择',
+      phone: 15655663236,
       address: '宇宙国地球村中国1号',
       themeColor: '', // 颜色主题
       textarea: '',
@@ -656,8 +673,79 @@ export default {
         }
       } else if (this.mode === 'multiLinkageSelector' && this.deepLength === 3) {
         let array = e.label.split('-')
-        let time = array[0] + '   ' + array[1] + ':' + array[2]
-        this.dronTime = time
+        let time = new Date()
+        const year = time.getFullYear()
+        const month = time.getMonth() + 1
+        let day = ''
+        if (array[0] === '明天') {
+          day = time.getDate() + 1
+        } else if (array[0] === '后天') {
+          day = time.getDate() + 2
+        } else {
+          day = time.getDate()
+        }
+        const hour = array[1]
+        const minuter = array[2]
+        this.dronTime = (year + '-' + month + '-' + day + ' ' + hour + ':' + minuter)
+      }
+    },
+    // 预约提交
+    async appointment () {
+      const params = {
+        name: this.name,
+        subtime: newDate(new Date()),
+        drontype: this.dronType,
+        dronproject: this.dronProject,
+        appointtime: this.dronTime,
+        message: this.textarea,
+        address: this.address,
+        phonenub: this.phone
+      }
+      if (this.dronTime === '请选择') {
+        showModal('预约失败', '请选择预约时间')
+        return false
+      } else if (this.phone === '') {
+        showModal('预约失败', '请输入您的手机号码')
+        return false
+      } else if (this.address === '') {
+        showModal('预约失败', '请属于您的地址')
+        return false
+      } else {
+        try {
+          const back = await post('/weapp/addappointment', params)
+          showSuccess(back.msg)
+          this.dronType = '请选择'
+          this.dronProject = '请选择'
+          this.dronTime = '请选择'
+          this.phone = ''
+          this.address = ''
+          this.textarea = ''
+        } catch (e) {
+          showModal('失败', e.msg)
+        }
+      }
+    },
+    // 手机号码权限获取 个人认证无法获取，需企业认证
+    getPhoneNumber (e) {
+      this.getIphone = false
+      console.log(e)
+      console.log(e.detail.errMsg)
+      console.log(e.detail.iv)
+      console.log(e.detail.encryptedData)
+      if (e.detail.errMsg === 'getPhoneNumber:fail user deny') {
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '未授权',
+          success  (res) { }
+        })
+      } else {
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '同意授权',
+          success (res) { }
+        })
       }
     }
   },
@@ -674,6 +762,7 @@ export default {
   },
   mounted () {
     this.dronProject = this.$root.$mp.query.contant
+    // let userinfo = wx.getStorageSync('userinfo')
   }
 }
 </script>
@@ -745,6 +834,15 @@ export default {
         width: 170rpx;
         -webkit-transform: scale(0.8);
         transform: scale(0.8);
+      }
+      .getIphone{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 5;
+        opacity: 0;
       }
     }
     .xuanze4 {
