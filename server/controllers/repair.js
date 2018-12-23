@@ -1,8 +1,9 @@
 const { mysql } = require('../qcloud')
 
 module.exports = async (ctx) => {
-    const repairList = await mysql('repairlist')
     const repair = await mysql('repair')
+    const repairList = await mysql('repairlist')
+    console.log(repair, repairList)
     ctx.state.data = {
         list: list(repair, repairList)
     }
@@ -17,13 +18,15 @@ function list (arr1, arr2) {
         }
         var repairListArray = []
         for (var j = 0; j < arr2.length; j++) {
-            var repairListObj = {
-                id: arr2[j].id,
-                contant: arr2[j].contant,
-                color: arr2[j].color,
-                iconfont: arr2[j].iconfont
+            if (arr1[i].type === arr2[j].type) {
+                var repairListObj = {
+                    id: arr2[j].id,
+                    contant: arr2[j].contant,
+                    color: arr2[j].color,
+                    iconfont: arr2[j].iconfont
+                }
+                repairListArray.push(repairListObj)
             }
-            repairListArray.push(repairListObj)
         }
         repairObj.context = repairListArray
         repairArray.push(repairObj)

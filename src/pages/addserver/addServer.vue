@@ -28,116 +28,14 @@
         page: 0,
         more: false,
         tops: [],
-        repairState: [{
-          id: '0',
-          name: '水电疏通',
-          context: [{
-            id: '0',
-            iconfont: 'icon-guandaoshutong',
-            contant: '管道疏通',
-            color: 'iconColor1'
-          },
-          {
-            id: '1',
-            iconfont: 'icon-shuiguanlongtou',
-            contant: '水管龙头',
-            color: 'iconColor2'
-          },
-          {
-            id: '2',
-            iconfont: 'icon-dengjudianlu',
-            contant: '灯具电路',
-            color: 'iconColor3'
-          },
-          {
-            id: '3',
-            iconfont: 'icon-fangshuizhilou',
-            contant: '防水治漏',
-            color: 'iconColor4'
-          },
-          {
-            id: '4',
-            iconfont: 'icon-weishengjianshenduqingjie',
-            contant: '厨卫洁具',
-            color: 'iconColor5'
-          }]
-        },
-        {
-          id: '1',
-          name: '开锁换锁',
-          context: [{
-            id: '0',
-            iconfont: 'icon-kaisuo',
-            contant: '开锁',
-            color: 'iconColor1'
-          },
-          {
-            id: '1',
-            iconfont: 'icon-genghuansuoxin',
-            contant: '更换锁芯',
-            color: 'iconColor2'
-          },
-          {
-            id: '2',
-            iconfont: 'icon-genghuanzhengtisuo',
-            contant: '更换整套锁',
-            color: 'iconColor3'
-          },
-          {
-            id: '3',
-            iconfont: 'icon-genghuanmenbashou',
-            contant: '更换门把手',
-            color: 'iconColor4'
-          },
-          {
-            id: '4',
-            iconfont: 'icon-genghuansuoti',
-            contant: '更换锁体',
-            color: 'iconColor5'
-          },
-          {
-            id: '5',
-            iconfont: 'icon-genghuanzhiwensuo',
-            contant: '更换指纹锁',
-            color: 'iconColor6'
-          },
-          {
-            id: '6',
-            iconfont: 'icon-baoxianxiangkaisuo',
-            contant: '保险箱开锁',
-            color: 'iconColor7'
-          },
-          {
-            id: '7',
-            iconfont: 'icon-qichekaisuo',
-            contant: '汽车开锁',
-            color: 'iconColor8`'
-          }]
-        },
-        {
-          id: '2',
-          name: '家电维修',
-          context: [{
-            id: '0',
-            iconfont: 'icon-kongtiaojiafu',
-            contant: '空调加氟',
-            color: 'iconColor1'
-          },
-          {
-            id: '1',
-            iconfont: 'icon-kongtiaoyiji',
-            contant: '空调移机安装',
-            color: 'iconColor2'
-          }]
-        }]
+        repairState: []
       }
     },
     methods: {
       async getRepair () {
         const Repair = await get('/weapp/repair')
-        // this.repairState = Repair.list
+        this.repairState = Repair.list
         console.log(Repair.list)
-        console.log(this.repairState)
       },
       async getList (init) {
         if (init) {

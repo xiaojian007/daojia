@@ -159,7 +159,7 @@
     },
     methods: {
       async getRepair () {
-        const Repair = await get('/weapp/repair')
+        const Repair = await get('/weapp/homelist')
         console.log(Repair.list)
       },
       async getList (init) {
@@ -184,10 +184,6 @@
         }
         // 在当前页面隐藏导航条加载动画
         wx.hideNavigationBarLoading()
-      },
-      async getTop () {
-        const tops = await get('/weapp/top')
-        this.tops = tops.list
       },
       yuyue (id, contant) {
         wx.navigateTo({
