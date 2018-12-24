@@ -35,7 +35,7 @@
     <!-- 组合套餐 -->
     <div class="baojieBox">
       <div class="baojieContent">
-        <h2 class="conH2">超划算组合套餐</h2>
+        <h2 class="conH2">推荐服务</h2>
         <div class="baojieList">
           <div class="baojieItem" v-for="(item, index) in taocanlist" :key="index">
             <div class="baojieListLeft" @click.stop="preview(item.img)">
@@ -45,13 +45,16 @@
               <p class="baojieP">{{item.title}}</p>
               <span class="baojieSpan">{{item.content}}</span>
               <div class="baojieA">
-                <div class="baojieAs">了解详情</div>
+                <div class="baojieAs">￥{{item.price}}<i class="price">起</i></div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- LoadMore 页底提示 -->
+    <!-- <i-load-more /> -->
+    <i-load-more tip="暂无更多数据" :loading="false" />
   </div>
 </template>
 
@@ -65,92 +68,10 @@
         books: [],
         page: 0,
         more: false,
-        tops: [{
-          id: 0,
-          url: '',
-          img: 'http://www.bitauto.com/topics/ad_topic/xtlcx/miniImg/banner.png'
-        }, {
-          id: 1,
-          url: '',
-          img: 'http://www.bitauto.com/topics/ad_topic/xtlcx/miniImg/banner.png'
-        }, {
-          id: 2,
-          url: '',
-          img: 'http://www.bitauto.com/topics/ad_topic/xtlcx/miniImg/banner.png'
-        }],
-        baojie: [{
-          id: '0',
-          iconfont: 'icon-zuofanxiwan',
-          contant: '做饭',
-          color: 'iconColor2'
-        }, {
-          id: '1',
-          iconfont: 'icon-zuofanxiwan',
-          contant: '洗碗',
-          color: 'iconColor1'
-        }, {
-          id: '2',
-          iconfont: 'icon-richangweisheng',
-          contant: '保洁',
-          color: 'iconColor5'
-        }],
-        baojie2: [{
-          id: '0',
-          iconfont: 'icon-richangweisheng',
-          contant: '日常保洁',
-          color: 'iconColor4'
-        }, {
-          id: '1',
-          iconfont: 'icon-jujiakaihuangbaojie',
-          contant: '深度保洁',
-          color: 'iconColor4'
-        }, {
-          id: '2',
-          iconfont: 'icon-boliqingjie',
-          contant: '开荒保洁',
-          color: 'iconColor4'
-        }, {
-          id: '3',
-          iconfont: 'icon-baomu',
-          contant: '保姆月嫂',
-          color: 'iconColor4'
-        }, {
-          id: '4',
-          iconfont: 'icon-shouna',
-          contant: '收纳',
-          color: 'iconColor4'
-        }, {
-          id: '5',
-          iconfont: 'icon-fangshuizhilou',
-          contant: '外墙清洁',
-          color: 'iconColor4'
-        }],
-        taocanlist: [{
-          id: '0',
-          title: '家居经典套餐',
-          img: 'http://www.bitauto.com/topics/ad_topic/xtlcx/miniImg/img.png',
-          content: '4小时全屋保洁+4小时精细擦窗'
-        }, {
-          id: '1',
-          title: '厨房保洁清蒸',
-          img: 'http://www.bitauto.com/topics/ad_topic/xtlcx/miniImg/img.png',
-          content: '4小时全屋保洁+4小时厨房蒸洗'
-        }, {
-          id: '2',
-          title: '全面大扫除套餐',
-          img: 'http://www.bitauto.com/topics/ad_topic/xtlcx/miniImg/img.png',
-          content: '4小时保洁+4小时擦窗+4小时厨房蒸洗'
-        }, {
-          id: '2',
-          title: '全面大扫除套餐',
-          img: 'http://www.bitauto.com/topics/ad_topic/xtlcx/miniImg/img.png',
-          content: '4小时保洁+4小时擦窗+4小时厨房蒸洗'
-        }, {
-          id: '2',
-          title: '全面大扫除套餐',
-          img: 'http://www.bitauto.com/topics/ad_topic/xtlcx/miniImg/img.png',
-          content: '4小时保洁+4小时擦窗+4小时厨房蒸洗'
-        }]
+        tops: [],
+        baojie: [],
+        baojie2: [],
+        taocanlist: []
       }
     },
     components: {
@@ -159,8 +80,12 @@
     },
     methods: {
       async getRepair () {
-        const Repair = await get('/weapp/homelist')
-        console.log(Repair.list)
+        const Home = await get('/weapp/homelist')
+        const HomeList = Home.list
+        this.tops = HomeList.swiperList
+        this.taocanlist = HomeList.setmealList
+        this.baojie = HomeList.cleaningList
+        this.baojie2 = HomeList.projectList
       },
       async getList (init) {
         if (init) {
@@ -277,14 +202,12 @@
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
-
   li {
     box-sizing: border-box;
     flex: 0 0 33.3333333%;
     padding: 1% 0;
     text-align: center;
     font-size: 16px;
-
     a {
       color: #333;
     }
@@ -292,8 +215,8 @@
 }
 
 .baojieBox {
-  padding: 0 2%;
-  background: #f1f2f6;
+  padding: 0 3%;
+  // background: #f1f2f6;
   .baojieContent {
     background: #fff;
     border-radius: 20rpx;
@@ -309,7 +232,10 @@
       display: flex;
       justify-content: flex-start;
       padding: 3%;
-      border-bottom: 2rpx solid #dedede;
+      // border-bottom: 2rpx solid #dedede;
+      :last-child{
+        border-bottom: 0;
+      }
       .baojieListLeft {
         width: 30%;
         .itemImg{
@@ -323,24 +249,25 @@
         position: relative;
         color: #333;
         font-size: 32rpx;
-
         .baojieSpan {
           color: #9a9a9a;
-          font-size: 28rpx;
+          font-size: 24rpx;
         }
 
         .baojieA{
           position: absolute;
-          right: 0;
-          bottom: 0;
-          padding: 1% 5%;
-          background: #ff5622;
-          border-radius: 30rpx;
-
+          left: 5rpx;
+          bottom: 5rpx;
           .baojieAs {
-            color: #fff;
-            font-size: 28rpx;
+            font-size: 32rpx;
+            color: #ff5622;
+            font-weight: bold;
             display: block;
+            .price{
+              display: inline-block;
+              font-size: 20rpx;
+              margin-left: 8rpx;
+            }
           }
         }
       }

@@ -1,4 +1,7 @@
 {
   "enablePullDownRefresh": true,
-  "navigationBarTitleText": "主页"
+  "navigationBarTitleText": "主页",
+  "usingComponents": {
+    "i-load-more": "../../../static/iVew/load-more/index"
+  }
 }

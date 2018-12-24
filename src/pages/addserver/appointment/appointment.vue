@@ -1,6 +1,6 @@
 <template>
   <div class="yuyue mvpue-picker">
-    <h3>预约维修</h3>
+    <h3>预约{{dronProject}}</h3>
     <div class="yuyue-list">
 
       <div class="xuanze">
@@ -78,7 +78,7 @@ export default {
       dronType: '保洁',
       dronProject: '请选择',
       dronTime: '请选择',
-      phone: 15655663236,
+      phone: '',
       address: '宇宙国地球村中国1号',
       themeColor: '', // 颜色主题
       textarea: '',

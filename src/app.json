@@ -9,7 +9,6 @@
     "pages/me/joinWork/main",
     "pages/me/myAddr/main",
     "pages/comments/main",
-    "pages/addserver/main",
     "pages/addserver/appointment/main",
     "pages/detail/main"
   ],
@@ -24,11 +23,6 @@
     "list": [{
       "pagePath": "pages/books/main",
       "text": "快速下单",
-      "selectedIconPath": "static/img/book-active.png",
-      "iconPath": "static/img/book.png"
-    }, {
-      "pagePath": "pages/addserver/main",
-      "text": "增值服务",
       "selectedIconPath": "static/img/book-active.png",
       "iconPath": "static/img/book.png"
     }, {

@@ -1,6 +1,9 @@
 <template>
   <div class="joinUs">
-    <img mode="widthFix" class="join-img" src="../../../static/img/join.jpg" alt="">
+    <img mode="widthFix" class="join-img" src="../../../static/img/1.jpg" alt="">
+    <img mode="widthFix" class="join-img" src="../../../static/img/2.jpg" alt="">
+    <img mode="widthFix" class="join-img" src="../../../static/img/3.jpg" alt="">
+    <img mode="widthFix" class="join-img" src="../../../static/img/4.jpg" alt="">
     <form>
       <view class="page-section">
         <view class="weui-cells__title">姓名</view>
@@ -146,7 +149,6 @@
     background: #f1f2f6;
     width: 100%;
   .join-img{
-    width: 96%;
     display: block;
     margin: 0 auto 20rpx;
   }
