@@ -1,9 +1,9 @@
 const { mysql } = require('../qcloud')
 
 module.exports = async (ctx) => {
-    const {name, subtime, drontype, dronproject, appointtime, message, address, phonenub} = ctx.request.body
+    const {name, subtime, dronproject, appointtime, message, address, phonenub} = ctx.request.body
     try {
-        await mysql('appointment').insert({ name, subtime, drontype, dronproject, appointtime, message, address, phonenub })
+        await mysql('appointment').insert({ name, subtime, dronproject, appointtime, message, address, phonenub })
         ctx.state.data = {
             msg: '预约成功'
         }

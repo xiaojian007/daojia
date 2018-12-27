@@ -1,13 +1,14 @@
 {
   "pages": [
-    "pages/books/main",
     "pages/me/main",
+    "pages/books/main",
     "pages/me/myOrder/main",
     "pages/me/cardCoupon/main",
     "pages/me/helpCenter/main",
     "pages/me/imsetting/main",
     "pages/me/joinWork/main",
     "pages/me/myAddr/main",
+    "pages/me/myAddr/addAddr/main",
     "pages/comments/main",
     "pages/addserver/appointment/main",
     "pages/detail/main"

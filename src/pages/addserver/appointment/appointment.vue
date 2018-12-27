@@ -15,11 +15,6 @@
       </div>
 
       <div class="xuanze">
-        <span class="title">选择类目</span>
-        <div class="type" @click="showSinglePicker(0)">{{dronType}}<span class="typeSpan"></span></div>
-      </div>
-
-      <div class="xuanze">
         <span class="title">选择项目</span>
         <div class="type" @click="showSinglePicker(1)">{{dronProject}}<span class="typeSpan"></span></div>
       </div>
@@ -75,27 +70,12 @@ export default {
       userinfo: {},
       pickerValueDefault: [], // 初始化值
       pickerValueArray: [], // picker 数组值
-      dronType: '保洁',
       dronProject: '请选择',
       dronTime: '请选择',
       phone: '',
       address: '宇宙国地球村中国1号',
       themeColor: '', // 颜色主题
       textarea: '',
-      dronTypeArray: [
-        {
-          label: '做饭',
-          value: 1
-        },
-        {
-          label: '洗碗',
-          value: 2
-        },
-        {
-          label: '保洁',
-          value: 3
-        }
-      ],
       dronProjectArray: [
         {
           label: '日常保洁',
@@ -694,7 +674,6 @@ export default {
       const params = {
         name: this.name,
         subtime: newDate(new Date()),
-        drontype: this.dronType,
         dronproject: this.dronProject,
         appointtime: this.dronTime,
         message: this.textarea,
@@ -714,7 +693,6 @@ export default {
         try {
           const back = await post('/weapp/addappointment', params)
           showSuccess(back.msg)
-          this.dronType = '请选择'
           this.dronProject = '请选择'
           this.dronTime = '请选择'
           this.phone = ''
